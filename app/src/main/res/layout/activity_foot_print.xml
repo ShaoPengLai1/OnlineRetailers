@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/dp_24"
+    android:paddingRight="@dimen/dp_24"
+    android:paddingTop="@dimen/dp_24"
+    tools:context=".displayview.mine.activity.FootPrintActivity">
+
+    <ImageView
+        android:id="@+id/aicon_back"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_22"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bar_back"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我的足迹"
+        android:textColor="#666666"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_alignParentRight="true"
+        />
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/myFootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/aicon_back"
+        android:layout_marginTop="@dimen/dp_20"
+        />
+</RelativeLayout>

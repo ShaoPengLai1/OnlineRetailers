@@ -3,6 +3,8 @@ package com.example.onlineretailers.Online.entry.home;
 import java.util.List;
 
 public class HomeBean {
+
+
     private ResultBean result;
     private String message;
     private String status;
@@ -32,35 +34,37 @@ public class HomeBean {
     }
 
     public static class ResultBean {
-        private List<RxxpBean> rxxp;
-        private List<PzshBean> pzsh;
-        private List<MlssBean> mlss;
 
-        public List<RxxpBean> getRxxp() {
+        private RxxpBean rxxp;
+        private PzshBean pzsh;
+        private MlssBean mlss;
+
+        public RxxpBean getRxxp() {
             return rxxp;
         }
 
-        public void setRxxp(List<RxxpBean> rxxp) {
+        public void setRxxp(RxxpBean rxxp) {
             this.rxxp = rxxp;
         }
 
-        public List<PzshBean> getPzsh() {
+        public PzshBean getPzsh() {
             return pzsh;
         }
 
-        public void setPzsh(List<PzshBean> pzsh) {
+        public void setPzsh(PzshBean pzsh) {
             this.pzsh = pzsh;
         }
 
-        public List<MlssBean> getMlss() {
+        public MlssBean getMlss() {
             return mlss;
         }
 
-        public void setMlss(List<MlssBean> mlss) {
+        public void setMlss(MlssBean mlss) {
             this.mlss = mlss;
         }
 
         public static class RxxpBean {
+
 
             private int id;
             private String name;
@@ -91,6 +95,7 @@ public class HomeBean {
             }
 
             public static class CommodityListBean {
+
 
                 private int commodityId;
                 private String commodityName;
@@ -141,6 +146,8 @@ public class HomeBean {
         }
 
         public static class PzshBean {
+
+
             private int id;
             private String name;
             private List<CommodityListBeanX> commodityList;
@@ -170,6 +177,7 @@ public class HomeBean {
             }
 
             public static class CommodityListBeanX {
+
 
                 private int commodityId;
                 private String commodityName;
@@ -220,7 +228,6 @@ public class HomeBean {
         }
 
         public static class MlssBean {
-
 
             private int id;
             private String name;

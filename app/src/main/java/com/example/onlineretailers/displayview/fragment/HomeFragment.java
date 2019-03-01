@@ -316,21 +316,21 @@ public class HomeFragment extends Fragment implements ContractEntity.IView {
             }
         } else if (data instanceof HomeBean) {
             HomeBean homeBean = (HomeBean) data;
-            hotAdapter.setmList(homeBean.getResult().getRxxp().get(0).getCommodityList());
-            pinAdapter.setmList(homeBean.getResult().getPzsh().get(0).getCommodityList());
-            moAdapter.setmList(homeBean.getResult().getMlss().get(0).getCommodityList());
+            hotAdapter.setmList(homeBean.getResult().getRxxp().getCommodityList());
+            pinAdapter.setmList(homeBean.getResult().getPzsh().getCommodityList());
+            moAdapter.setmList(homeBean.getResult().getMlss().getCommodityList());
             hotAdapter.onClickListener(index -> {
-                int commodityId = homeBean.getResult().getRxxp().get(0).
+                int commodityId = homeBean.getResult().getRxxp().
                         getCommodityList().get(index).getCommodityId();
                 getGoods(commodityId);
             });
             pinAdapter.onClickListener(index -> {
-                int commodityId = homeBean.getResult().getPzsh().get(0).
+                int commodityId = homeBean.getResult().getPzsh().
                         getCommodityList().get(index).getCommodityId();
                 getGoods(commodityId);
             });
             moAdapter.onClickListener(index -> {
-                int commodityId = homeBean.getResult().getMlss().get(0).
+                int commodityId = homeBean.getResult().getMlss().
                         getCommodityList().get(index).getCommodityId();
                 getGoods(commodityId);
             });
@@ -425,6 +425,6 @@ public class HomeFragment extends Fragment implements ContractEntity.IView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();;
+        unbinder.unbind();
     }
 }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,8 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.onlineretailers.Online.adapter.circle.adapter.CircleAdaper;
+import com.example.onlineretailers.Online.adapter.shopcar.adapter.CommentListAdapter;
 import com.example.onlineretailers.Online.adapter.shopcar.adapter.DetailThingsBannerAdapter;
 import com.example.onlineretailers.Online.entry.shopcar.bean.AddShopCarBean;
+import com.example.onlineretailers.Online.entry.shopcar.bean.CommentBean;
 import com.example.onlineretailers.Online.entry.shopcar.bean.GoodsDetailBean;
 import com.example.onlineretailers.Online.entry.shopcar.bean.ShopCarBean;
 import com.example.onlineretailers.Online.entry.shopcar.bean.ShoppingCarBean;
@@ -27,6 +32,8 @@ import com.example.onlineretailers.utils.api.Apis;
 import com.example.onlineretailers.utils.mvp.ContractEntity;
 import com.example.onlineretailers.utils.mvp.presenter.IPresenterImpl;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -82,19 +89,25 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
     RelativeLayout changeTitle;
     @BindView(R.id.relative_changeColor)
     RelativeLayout relativeChangeColor;
+    @BindView(R.id.comment)
+    RecyclerView comment;
     private IPresenterImpl iPresenter;
     private GoodsDetailBean goodsBean;
     private int commodityId;
     private int iconCount;
-    private int num=1;
+    private int num = 1;
+    private CommentListAdapter commentListAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
-        iPresenter=new IPresenterImpl(this);
+        iPresenter = new IPresenterImpl(this);
     }
+
+
 
     @Override
     protected void onStart() {
@@ -103,7 +116,7 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
 
     }
 
-    @Subscribe (threadMode = ThreadMode.POSTING, sticky = true)
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
     public void onEvent(EventBean evBean) {
         if (evBean.getName().equals("goods")) {
             goodsBean = (GoodsDetailBean) evBean.getClazz();
@@ -114,7 +127,6 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
 
     @SuppressLint("JavascriptInterface")
     private void loadData() {
-
         //手动轮播
         viewpagerIconShow.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -153,9 +165,12 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
         DetailThingsBannerAdapter bannerAdapter = new DetailThingsBannerAdapter(split, this);
         iconCount = bannerAdapter.getCount();
         viewpagerIconShow.setAdapter(bannerAdapter);
-
+        comment.setLayoutManager(new LinearLayoutManager(DetailsActivity.this,LinearLayoutManager.VERTICAL,false));
+        commentListAdapter=new CommentListAdapter(this);
+        comment.setAdapter(commentListAdapter);
+        loadDataComment();
         detailScroll.setScrollViewListener((scrollView, l, t, oldl, oldt) -> {
-            if (t<=0){
+            if (t <= 0) {
                 changeTitle.setVisibility(View.GONE);
                 relativeChangeColor.setBackgroundColor(Color.argb(0, 0, 0, 0));
             } else if (t > 0 && t < 200) {
@@ -172,20 +187,31 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
                 textThings.setBackgroundColor(Color.parseColor("#505d5d5d"));
                 textDetails.setBackgroundColor(Color.RED);
                 textComments.setBackgroundColor(Color.parseColor("#505d5d5d"));
+
             } else if (t > 1601) {
                 textThings.setBackgroundColor(Color.parseColor("#505d5d5d"));
                 textDetails.setBackgroundColor(Color.parseColor("#505d5d5d"));
                 textComments.setBackgroundColor(Color.RED);
+
+
             }
+
         });
+
+
         aiconBack.setOnClickListener(v -> finish());
+    }
+
+    private void loadDataComment() {
+        iPresenter.startRequestGet(Apis.COMMODITY_COMMENT_LIST_GET+"?commodityId="+commodityId+"&page=1&count=10",null, CommentBean.class);
+
     }
 
     @Override
     public void getDataSuccess(Object data) {
-        if (data instanceof ShopCarBean){
-            ShopCarBean shopCarBean= (ShopCarBean) data;
-            if (shopCarBean.getMessage().equals("查询成功")){
+        if (data instanceof ShopCarBean) {
+            ShopCarBean shopCarBean = (ShopCarBean) data;
+            if (shopCarBean.getMessage().equals("查询成功")) {
 
                 List<ShoppingCarBean> list = new ArrayList<>();
                 List<ShopCarBean.ResultBean> result = shopCarBean.getResult();
@@ -194,25 +220,28 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
                 }
                 addShopCar(list);
             }
-        }else if (data instanceof AddShopCarBean) {
+        } else if (data instanceof AddShopCarBean) {
             AddShopCarBean addShopping = (AddShopCarBean) data;
             Toast.makeText(DetailsActivity.this, addShopping.getMessage(), Toast.LENGTH_LONG).show();
+        }else if (data instanceof CommentBean){
+            CommentBean commentBean= (CommentBean) data;
+            commentListAdapter.setmList(commentBean.getResult());
         }
     }
 
     //添加购物车
     private void addShopCar(List<ShoppingCarBean> list) {
-        if (list.size()==0){
-            list.add(new ShoppingCarBean(Integer.valueOf(commodityId),num));
-        }else {
-            for (int i=0;i<list.size();i++){
-                if(Integer.valueOf(commodityId)==list.get(i).getCommodityId()){
+        if (list.size() == 0) {
+            list.add(new ShoppingCarBean(Integer.valueOf(commodityId), num));
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (Integer.valueOf(commodityId) == list.get(i).getCommodityId()) {
                     int count = list.get(i).getCount();
-                    count+=num;
+                    count += num;
                     list.get(i).setCount(count);
                     break;
-                }else if(i==list.size()-1){
-                    list.add(new ShoppingCarBean(Integer.valueOf(commodityId),num));
+                } else if (i == list.size() - 1) {
+                    list.add(new ShoppingCarBean(Integer.valueOf(commodityId), num));
                     break;
                 }
             }
@@ -232,7 +261,6 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.shopAdd:
-
                 selectorShopCar();
                 break;
             case R.id.shopBuy:
@@ -243,7 +271,7 @@ public class DetailsActivity extends AppCompatActivity implements ContractEntity
     //查询购物车
     private void selectorShopCar() {
 
-        iPresenter.startRequestGet(Apis.FIND_SHOPPING_CART_GET,null,ShopCarBean.class);
+        iPresenter.startRequestGet(Apis.FIND_SHOPPING_CART_GET, null, ShopCarBean.class);
 
     }
 

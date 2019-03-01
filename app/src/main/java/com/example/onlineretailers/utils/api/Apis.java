@@ -66,7 +66,7 @@ public class Apis {
     /**
      * 删除订单 http://172.17.8.100/small/order/verify/v1/deleteOrder
      */
-    public static final String DELETE_ORDER_DELETE="order/verify/v1/deleteOrder";
+    public static final String DELETE_ORDER_DELETE="order/verify/v1/deleteOrder?orderId=%s";
     /**
      * 收货 http://172.17.8.100/small/order/verify/v1/confirmReceipt
      */
@@ -90,15 +90,15 @@ public class Apis {
     /**
      * 发布圈子 http://172.17.8.100/small/circle/verify/v1/releaseCircle
      */
-    public static final String RELEASE_CIRCLE_POST="user/verify/v1/releaseCircle";
+    public static final String RELEASE_CIRCLE_POST="circle/verify/v1/releaseCircle";
     /**
      * 删除我发表过的圈子 http://172.17.8.100/small/circle/verify/v1/deleteCircle
      */
-    public static final String DELETE_CIRCLE_DELETE="user/verify/v1/deleteCircle";
+    public static final String DELETE_CIRCLE_DELETE="circle/verify/v1/deleteCircle?circleId=%s";
     /**
      * 我的圈子 http://172.17.8.100/small/circle/verify/v1/findMyCircleById
      */
-    public static final String FIND_MYCIRCLE_BYID_GET="user/verify/v1/findMyCircleById";
+    public static final String FIND_MYCIRCLE_BYID_GET="circle/verify/v1/findMyCircleById";
     /**
      * 圈子点赞 http://172.17.8.100/small/circle/verify/v1/addCircleGreat
      */

@@ -132,6 +132,7 @@
                             android:gravity="center"
                             android:textSize="@dimen/sp_16"
                             android:textColor="#ff7f57"
+                            app:layout_constraintTop_toTopOf="parent"
                             android:background="@mipmap/bg_rxxp_syf"
                             />
                         <ImageView
@@ -170,6 +171,7 @@
                         >
                         <TextView
                             android:id="@+id/con_tv2"
+                            app:layout_constraintTop_toTopOf="parent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="魔力时尚"
@@ -212,6 +214,7 @@
                         >
                         <TextView
                             android:id="@+id/con_tv3"
+                            app:layout_constraintTop_toTopOf="parent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="品质生活"

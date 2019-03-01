@@ -73,6 +73,37 @@ public class IPresenterImpl implements ContractEntity.IPresenter {
             }
         });
     }
+
+    @Override
+    public void imagePostRequest(String url, Map<String, String> map, Class clazz) {
+        mImodel.requestImagePost(url, map, clazz, new MyCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                mIviw.getDataSuccess(data);
+            }
+
+            @Override
+            public void onFail(String error) {
+                mIviw.getDataFail(error);
+            }
+        });
+    }
+
+    @Override
+    public void imagesPostRequest(String url, Map<String, Object> map, Class clazz) {
+        mImodel.imagePost(url, map, clazz, new MyCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                mIviw.getDataSuccess(data);
+            }
+
+            @Override
+            public void onFail(String error) {
+                mIviw.getDataFail(error);
+            }
+        });
+    }
+
     public void onDetach() {
         if (mImodel != null) {
             mImodel = null;

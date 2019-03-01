@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/aicon_back"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_22"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/bar_back"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/text_myaddre"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/new_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="新增收获地址"
+        android:textColor="#666666"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/new_text"
+        app:layout_constraintBottom_toBottomOf="@id/new_text"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/dp_20"
+        android:textSize="@dimen/sp_18"
+        android:text="保存"
+        />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_text"
+        android:background="@drawable/newaddress_shape"
+        >
+
+        <TextView
+            android:id="@+id/recipients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="收件人:"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="@id/recipients_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/recipients_edit"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:background="@null"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@id/recipients"
+            app:layout_constraintLeft_toRightOf="@id/recipients"
+            app:layout_constraintRight_toRightOf="@id/recipients_view"
+            app:layout_constraintTop_toTopOf="@id/recipients" />
+
+        <View
+            android:id="@+id/recipients_view"
+            android:layout_width="@dimen/dp_270"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="#ccc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recipients_edit" />
+
+        <TextView
+            android:id="@+id/telephone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="手机号码:"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="@id/recipients_view"
+            app:layout_constraintTop_toBottomOf="@id/recipients_view" />
+
+        <EditText
+            android:id="@+id/telephone_edit"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:background="@null"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@id/telephone"
+            app:layout_constraintLeft_toRightOf="@id/telephone"
+            app:layout_constraintRight_toRightOf="@id/telephone_view"
+            app:layout_constraintTop_toTopOf="@id/telephone" />
+
+        <View
+            android:id="@+id/telephone_view"
+            android:layout_width="@dimen/dp_270"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="#ccc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/telephone_edit"/>
+        <TextView
+            android:id="@+id/area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="所在地区:"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="@id/telephone_view"
+            app:layout_constraintTop_toBottomOf="@id/telephone_view" />
+        <EditText
+            android:id="@+id/area_edit"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:background="@null"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@id/area"
+            app:layout_constraintLeft_toRightOf="@id/area"
+            app:layout_constraintRight_toRightOf="@id/area_view"
+            app:layout_constraintTop_toTopOf="@id/area" />
+        <ImageView
+            android:id="@+id/area_image"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            app:layout_constraintTop_toTopOf="@id/area_edit"
+            app:layout_constraintBottom_toBottomOf="@id/area_edit"
+            app:layout_constraintRight_toRightOf="@id/area_edit"
+            android:background="@drawable/ic_right_name"
+            />
+        <View
+            android:id="@+id/area_view"
+            android:layout_width="@dimen/dp_270"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="#ccc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/area_edit"/>
+        <TextView
+            android:id="@+id/detailed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="详细地址:"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="@id/detailed_view"
+            app:layout_constraintTop_toBottomOf="@id/area_view" />
+        <EditText
+            android:id="@+id/detailed_edit"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:background="@null"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@id/detailed"
+            app:layout_constraintLeft_toRightOf="@id/area"
+            app:layout_constraintRight_toRightOf="@id/detailed_view"
+            app:layout_constraintTop_toTopOf="@id/detailed" />
+        <View
+            android:id="@+id/detailed_view"
+            android:layout_width="@dimen/dp_270"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_25"
+            android:background="#ccc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailed_edit"/>
+
+        <TextView
+            android:id="@+id/postcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="邮政编码:"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="@id/telephone_view"
+            app:layout_constraintTop_toBottomOf="@id/detailed_view" />
+        <EditText
+            android:id="@+id/postcode_edit"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:background="@null"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@id/postcode"
+            app:layout_constraintLeft_toRightOf="@id/area"
+            app:layout_constraintRight_toRightOf="@id/area_view"
+            app:layout_constraintTop_toTopOf="@id/postcode" />
+        <View
+            android:id="@+id/postcode_view"
+            android:layout_width="@dimen/dp_270"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="#ccc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postcode_edit"/>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

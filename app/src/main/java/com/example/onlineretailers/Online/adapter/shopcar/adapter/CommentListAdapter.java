@@ -18,6 +18,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.CommentViewHolder> {
@@ -66,7 +67,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         }
 
         commentViewHolder.text_name.setText(mList.get(i).getNickName());
-        String dateTime = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(mList.get(i).getCreateTime()));
+        String dateTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date(mList.get(i).getCreateTime()));
         commentViewHolder.text_time.setText(dateTime);
         commentViewHolder.text_artcile.setText(mList.get(i).getContent());
     }

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.onlineretailers.Online.adapter.shopcar.adapter.ShopCarAdapter;
 import com.example.onlineretailers.Online.entry.shopcar.bean.FindShoppingCartBean;
 import com.example.onlineretailers.R;
+import com.example.onlineretailers.displayview.shop.activity.CloseActivity;
 import com.example.onlineretailers.utils.api.Apis;
 import com.example.onlineretailers.utils.mvp.ContractEntity;
 import com.example.onlineretailers.utils.mvp.presenter.IPresenterImpl;
@@ -71,8 +72,11 @@ public class ShoppingFragment extends Fragment implements ContractEntity.IView {
         carAdapter = new ShopCarAdapter(getActivity());
         cartRecyycle.setAdapter(carAdapter);
         iPresenter.startRequestGet(Apis.FIND_SHOPPING_CART_GET, null, FindShoppingCartBean.class);
-        carAdapter.setCallBackCart(position -> carAdapter.setDel(position));
 
+        carAdapter.setCallBackCart(position -> {
+            carAdapter.setDel(position);
+            carAdapter.notifyDataSetChanged();
+        });
         carAdapter.setCallBackList(mResult -> {
             double totalPrice = 0;
             int num = 0;
@@ -144,14 +148,14 @@ public class ShoppingFragment extends Fragment implements ContractEntity.IView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_close:
-//                if(checkList!=null && checkList.size()!=0){
-//                    Intent intent = new Intent(getActivity(),CloseActivity.class);
-//                    intent.putParcelableArrayListExtra("checkList",checkList);
-//                    //startActivity(intent);
-//                    startActivityForResult(intent,100);
-//                }else{
-//                    Toast.makeText(getActivity(), "请选择要提交的商品", Toast.LENGTH_SHORT).show();
-//                }
+                if(checkList!=null && checkList.size()!=0){
+                    Intent intent = new Intent(getActivity(),CloseActivity.class);
+                    intent.putParcelableArrayListExtra("checkList",checkList);
+                    //startActivity(intent);
+                    startActivityForResult(intent,100);
+                }else{
+                    Toast.makeText(getActivity(), "请选择要提交的商品", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.query:
                 getCheck(query.isChecked());

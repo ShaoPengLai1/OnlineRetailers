@@ -3,12 +3,17 @@ package com.example.onlineretailers.utils.network;
 import com.example.onlineretailers.utils.network.custom.BaseApis;
 import com.example.onlineretailers.utils.network.custom.CustomIntercept;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -24,10 +29,10 @@ import rx.schedulers.Schedulers;
 
 public class RetrofitManager <T> {
 
-    //外网域名
+    //TODO 外网域名
     private final String BASE_URL="http://mobile.bwstudent.com/small/";
-    //内网
-    //private final String BASE_URL="http://172.17.8.100/small/";
+    //TODO 内网
+//    private final String BASE_URL="http://172.17.8.100/small/";
     private static RetrofitManager retrofitManager;
     private final OkHttpClient httpClient;
     private BaseApis mBaseApis;
@@ -42,7 +47,7 @@ public class RetrofitManager <T> {
         }
         return retrofitManager;
     }
-    public RetrofitManager(){
+    private RetrofitManager(){
         OkHttpClient.Builder builder=new OkHttpClient.Builder();
         builder.connectTimeout(15,TimeUnit.SECONDS);
         builder.readTimeout(15,TimeUnit.SECONDS);
@@ -58,6 +63,15 @@ public class RetrofitManager <T> {
         mBaseApis=retrofit.create(BaseApis.class);
     }
 
+    public Map<String, RequestBody> generateRequestBody(Map<String, String> requesrDataMap) {
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        for (String key : requesrDataMap.keySet()) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),
+                    requesrDataMap.get(key) == null ? "" : requesrDataMap.get(key));
+            requestBodyMap.put(key, requestBody);
+        }
+        return requestBodyMap;
+    }
     /**
      * get请求
      * @param url
@@ -69,6 +83,22 @@ public class RetrofitManager <T> {
                 .subscribe(getObserver(listener));
     }
 
+    /**
+     * 表单post请求
+     */
+    public void postFormBody(String url, Map<String, RequestBody> map,HttpListener listener) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        mBaseApis.postFormBody(url,map)
+                //后台执行在哪个线程
+                .subscribeOn(Schedulers.io())
+                //最终完成后执行在哪个线程
+                .observeOn(AndroidSchedulers.mainThread())
+                //设置rxjava
+                .subscribe(getObserver(listener));
+
+    }
     /**
      * post请求
      * @param url
@@ -108,6 +138,58 @@ public class RetrofitManager <T> {
             params=new HashMap<>();
         }
         mBaseApis.delete(quxiao,params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
+    }
+    /**
+     *上传头像
+     * */
+    public static MultipartBody filesMultipar(Map<String,String> map){
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        for(Map.Entry<String,String> entry:map.entrySet()){
+            File file = new File(entry.getValue());
+            builder.addFormDataPart(entry.getKey(),"tp.png",
+                    RequestBody.create(MediaType.parse("multipart/form-data"),file));
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        return multipartBody;
+    }
+    public void imagePost(String url, Map<String,String> map,HttpListener listener){
+        if(map == null){
+            map = new HashMap<>();
+        }
+        MultipartBody multipartBody = filesMultipar(map);
+        mBaseApis.imagePost(url,multipartBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
+    }
+    /**
+     * 上传多张图片
+     */
+    public void postFileMore(String url, Map<String, Object> map,HttpListener listener) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builder.addFormDataPart("commodityId", String.valueOf(map.get("commodityId")));
+        if(!String.valueOf(map.get("orderId")).equals("")){
+            builder.addFormDataPart("orderId", String.valueOf(map.get("orderId")));
+        }
+        builder.addFormDataPart("content", String.valueOf(map.get("content")));
+        if (!map.get("image").equals("")) {
+            List<String> image = (List<String>) map.get("image");
+            for(int i=0;i<image.size();i++){
+                File file = new File(image.get(i));
+                builder.addFormDataPart("image", file.getName(),RequestBody.create(MediaType.parse("multipart/form-data"),file));
+            }
+
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        mBaseApis.imagePost(url, multipartBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getObserver(listener));

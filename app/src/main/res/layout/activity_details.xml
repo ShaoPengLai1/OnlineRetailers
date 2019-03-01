@@ -18,10 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
-
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,6 +25,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager_icon_show"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_height="@dimen/dp_274" />
                 <TextView
                     android:id="@+id/text_icon_showNum"
@@ -104,8 +101,11 @@
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 tools:ignore="WebViewLayout" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </com.example.onlineretailers.displayview.details.cousom.DetailThingsScrollView>
     <RelativeLayout
@@ -116,10 +116,11 @@
 
         <ImageView
             android:id="@+id/aicon_back"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
             android:layout_marginTop="@dimen/dp_10"
-            android:src="@mipmap/common_nav_btn_back_n" />
+            android:background="@drawable/bar_back"
+            />
         <RelativeLayout
             android:id="@+id/change_title"
             android:layout_width="@dimen/dp_200"
@@ -192,6 +193,7 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/common_btn_add_n"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             />
         <ImageView
             android:id="@+id/shopBuy"
